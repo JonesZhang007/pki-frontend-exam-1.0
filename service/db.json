@@ -26,7 +26,7 @@
       "model": "TGA 4000 System, 100-240V/50-60Hz",
       "brand": "Thermal",
       "weight": "15 kg",
-      "manufactureDate": "2011-10-24"
+      "manufactureDate": "2011-10-28"
     },
     {
       "id": "asset:010",
@@ -69,6 +69,28 @@
       "brand": "55",
       "weight": "77",
       "manufactureDate": "2022-06-08"
+    },
+    {
+      "id": "OFK0M0s",
+      "model": "44",
+      "brand": "66",
+      "weight": "67",
+      "manufactureDate": "2022-06-08"
+    },
+    {
+      "id": "9ADbFAo",
+      "model": "009",
+      "brand": "23",
+      "weight": "55",
+      "manufactureDate": "2022-06-12"
+    },
+    {
+      "id": "SuGGOXq"
+    },
+    {
+      "id": "MnXgl8r",
+      "model": "44",
+      "manufactureDate": "2022-06-10"
     }
   ]
 }

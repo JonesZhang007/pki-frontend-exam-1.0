@@ -16,6 +16,43 @@
         table tr:nth-child(even) {
             background-color: #ffffff;
         }
+
+        ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 0px;
+        }
+
+        .pageList-item0 {
+            border: 1px solid #DDDDDD;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        .pageList-item {
+            border: 1px solid #DDDDDD;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        .pageList-item:hover{
+            background:yellow;
+            color:red;
+            cursor:pointer;
+        }
+
+
+        .active {
+            color: #C9302C;
+            background:yellow;
+            border: none;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
     </style>
 
     <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
@@ -42,13 +79,13 @@
             <th>manufactureDate</th>
             <th>operation</th>
         </tr>
-        <tr ng-repeat="x in equips | orderBy : 'brand'">
+        <tr ng-repeat="x in items | orderBy : 'brand'">
             <td>{{ $index + 1 }}</td>
             <td>{{ x.id }}</td>
             <td>{{ x.model }}</td>
             <td>{{ x.brand | uppercase }}</td>
             <td>{{ x.manufactureDate }}</td>
-            <td><button type="button" value="{{x.id}}" onclick="Js_Detail(this.value)">[ Detail ]</button>
+            <td style="text-align:center;"><button type="button" value="{{x.id}}" onclick="Js_Detail(this.value)">[ Detail ]</button>
                 <button type="button" value="{{x.id}}" onclick="Js_Edit(this.value)">[ Edit ]</button>
                 <button type="button"  ng-click="Js_Remove(x.id)">[ Delete ]</button>
             </td>
@@ -62,17 +99,100 @@
     </div>
 
 
+    <div style="width:80%;text-align:right;">
+        <footer class="footer" style="margin:0 0 0 80%;">
+            <ul class="pageList">
+                <li class="pageList-item" ng-click="firstPage()">[first]</li>
+                <li class="pageList-item" ng-click="previousPage()">[prev]</li>
+                <li class="pageList-item" ng-repeat="pages in pageList" ng-class="{'active': isActive(pages)}">
+                    <a href="" ng-click="selectPage(pages)">{{pages}}</a></li>
+                <li class="pageList-item" ng-click="nextPage()">[next]</li>
+                <li class="pageList-item" ng-click="lastPage()">[end]</li>
+                <li class="pageList-item0">total:{{pageNumbers}}</li>
+            </ul>
+        </footer>
+    </div>
+
 </div>
 
 <script>
     var app = angular.module('myApp', []);
     app.controller('equipCtrl', function($scope, $http) {
         $http.get("http://localhost:8000/equipments")
-            .then(function (result) {
+            .then(function successCallBack(result) {
                 //console.log(result.data);
                 $scope.equips = result.data;
                 $scope.totalRecords = $scope.equips!=null ? $scope.equips.length:0;
+
+                $scope.pageTotal = $scope.equips.length;
+                $scope.pageSize = 5;
+                $scope.pageNumbers = Math.ceil($scope.pageTotal / $scope.pageSize);
+                $scope.newPages = $scope.pageNumbers > 5 ? 5 : $scope.pageNumbers;
+                $scope.pageList = [];
+                $scope.selPage = 1;
+
+                // set data source of page split
+                $scope.setData = function () {
+                    $scope.items = $scope.equips.slice($scope.pageSize * ($scope.selPage - 1), ($scope.selPage * $scope.pageSize));
+                }
+                $scope.items = $scope.equips.slice(0, $scope.pageSize);
+
+                //circle data
+                for (var i = 0; i < $scope.pageNumbers; i++) {
+                    $scope.pageList.push(i + 1)// show page num
+                }
+
+                //print current selected page index
+                $scope.selectPage = function (page) {
+                    if (page < 1 || page > $scope.pageNumbers) return;
+                    if (page > 2) {
+                        var newPageList = [];
+
+                        for (var i = (page - 3); i < ((page + 2) > $scope.pageNumbers ? $scope.pageNumbers : (page + 2)); i++) {
+                            newPageList.push(i + 1);
+                        }
+                        $scope.pageList = newPageList;
+                    }
+
+                    $scope.selPage = page;
+                    $scope.setData();
+                    $scope.isActive(page);
+                }
+                $scope.isActive = function (page) {
+
+                    return $scope.selPage == page
+                }
+
+                // click prev page
+                $scope.previousPage = function () {
+                    $scope.selectPage($scope.selPage - 1)
+                }
+                //click next page
+                $scope.nextPage = function () {
+                    $scope.selectPage($scope.selPage + 1)
+                }
+
+                //click first page
+                $scope.firstPage = function () {
+                    $scope.selectPage(1);
+                    $scope.pageList = [];
+                    //circle data
+                    for (var i = 0; i < $scope.pageNumbers; i++) {
+                        $scope.pageList.push(i + 1)// show page num
+                    }
+                }
+
+                // click end page
+                $scope.lastPage = function () {
+                    $scope.selectPage($scope.pageNumbers)
+                }
+
+
+            }, function errorCallBack(response) {
+                alert(response);
             });
+
+
 
         $scope.Js_Remove=function(idObj){
             //console.log(idObj);

@@ -38,7 +38,7 @@
         <form name="form1">
         <table style="width:80%">
             <tr>
-                <td>model:</td>
+                <td style="width:15%;">model: <span style='color:red;text-align: right;float:right;'>*</span></td>
                 <td> <input type="text" ng-model="dataModel.model" /> </td>
             </tr>
             <tr>
@@ -50,7 +50,7 @@
                 <td><input type="text" ng-model="dataModel.weight"/> </td>
             </tr>
             <tr>
-                <td>manufactureDate:</td>
+                <td>manufactureDate:<span style="color:red;text-align: right;float:right;">*</span></td>
                 <td><input type="date" ng-model="dataModel.manufactureDate" aria-required="true" />
                 </td>
 
@@ -122,6 +122,16 @@
             var dateAsString = $filter('date')($scope.dataModel.manufactureDate, "yyyy-MM-dd");
             uiData.manufactureDate=dateAsString;
             console.log(uiData);
+
+            if(uiData.model==null || uiData.model==undefined || uiData.model==""){
+                alert('model can not be empty. Will exit saving.');
+                return;
+            }
+
+            if(uiData.manufactureDate==null || uiData.manufactureDate==undefined || uiData.manufactureDate==""){
+                alert('manufactureDate can not be empty. Will exit saving.');
+                return;
+            }
 
             if($scope.formTitle=="edit"){
                 // edit
