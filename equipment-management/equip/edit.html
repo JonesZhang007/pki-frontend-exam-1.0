@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>edit</title>
+
+
+
+    <style>
+        table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+
+
+    <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+
+
+</head>
+<body>
+
+>>
+    <div  ng-app="myApp" ng-controller="equipCtrl" style="width:100%" >
+        <div ng-switch on="formTitle">
+            <div ng-switch-when="edit">equipment edit</div>
+            <div ng-switch-when="add">equipment add</div>
+        </div>
+
+        <div>
+        <form name="form1">
+        <table style="width:80%">
+            <tr>
+                <td>model:</td>
+                <td> <input type="text" ng-model="dataModel.model" /> </td>
+            </tr>
+            <tr>
+                <td>brand:</td>
+                <td><input type="text" ng-model="dataModel.brand"  /> </td>
+            </tr>
+            <tr>
+                <td>weight:</td>
+                <td><input type="text" ng-model="dataModel.weight"/> </td>
+            </tr>
+            <tr>
+                <td>manufactureDate:</td>
+                <td><input type="date" ng-model="dataModel.manufactureDate" aria-required="true" />
+                </td>
+
+            </tr>
+
+            <tr id="trId" style="display:none;">
+                <td>id:</td>
+                <td><input type="text" ng-model="dataModel.id" /> </td>
+            </tr>
+
+        </table>
+        </form>
+        </div>
+
+        <br/>
+
+        <div style="width:80%;text-align:center;"><!--<a onclick="JS_Save();" href="#" type="submit">[ Save ]</a>-->
+             <a href="#" ng-click="JS_Save()">[ Save ]</a>
+            &nbsp;&nbsp;&nbsp;
+            <a onclick="JS_BackToList();" href="#">[ Back To List ]</a>
+        </div>
+
+
+    </div>
+
+
+<script>
+    var app = angular.module('myApp', []);
+    var id="";
+
+
+
+    app.config(['$locationProvider', function($locationProvider) {
+        // $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    }]);
+
+    app.controller('equipCtrl', function($location,$scope, $http,$filter) {
+        console.log($location.search().id);
+        $scope.id=$location.search().id;
+        if($scope.id!=null && $scope.id!="0" && $scope.id!=undefined && $scope.id!=""  ){
+            $http.get("http://localhost:8000/equipments/" +  $scope.id)
+                .then(function (result) {
+                    $scope.dataModel = result.data;
+                    var dateAsString = $filter('date')($scope.dataModel.manufactureDate, "yyyy-MM-dd");
+                    //console.log(dateAsString);
+                    $scope.dataModel.manufactureDate = new Date(dateAsString);
+                });
+
+            $scope.formTitle = "edit";
+        }else{
+            $scope.dataModel={};
+            $scope.formTitle = "add";
+        }
+
+
+        $scope.JS_Save=function(){
+            var uiData={
+                id:$scope.dataModel.id,
+                model:$scope.dataModel.model,
+                brand:$scope.dataModel.brand,
+                weight:$scope.dataModel.weight,
+                manufactureDate:$scope.dataModel.manufactureDate
+            }
+
+            var dateAsString = $filter('date')($scope.dataModel.manufactureDate, "yyyy-MM-dd");
+            uiData.manufactureDate=dateAsString;
+            console.log(uiData);
+
+            if($scope.formTitle=="edit"){
+                // edit
+                $http({
+                    method:'put',
+                    url:'http://localhost:8000/equipments/'+ $scope.id,
+                    //url:'http://localhost:8000/equipments/0000',
+                    data:uiData
+                }).then(function(resp){
+                    if(resp!=null && resp.status==200){
+                        alert('save success.');
+                        var msg='Are you want to go to list page ?';
+                        if(JS_Confirm(msg)){
+                            location.href='list.html';
+                        }
+                    }
+                },function error(msg){
+                    //console.log(msg);
+                    if(msg!=null && msg.statusText!=null){
+                        alert('save failed:' + msg.statusText);
+                    }else{
+                        alert('save changes failed.');
+                    }
+                });
+            }else {
+                // add
+                uiData.id=null;
+
+                $http({
+                    method:'post',
+                    url:'http://localhost:8000/equipments/',
+                    //url:'http://localhost:8000/equipments/0000',
+                    data:uiData
+                }).then(function(resp){
+                    if(resp!=null && (resp.status==200 || resp.status==201)){
+                        alert('save success.');
+                        var msg='Are you want to go to list page ?';
+                        if(JS_Confirm(msg)){
+                            location.href='list.html';
+                        }
+                    }
+                },function error(msg){
+                    //console.log(msg);
+                    if(msg!=null && msg.statusText!=null){
+                        alert('save failed:' + msg.statusText);
+                    }else{
+                        alert('save changes failed.');
+                    }
+                });
+            }
+
+
+        }
+    });
+</script>
+
+
+<script src="../js/customerizeCommon.js"></script>
+
+<script type="text/javascript">
+   /* function JS_Save(){
+        var sMsg="Are you sure to save your changes ?";
+        if(JS_Confirm(sMsg)){
+            //toSave()
+            console.log('toSave');
+            console.log($$scope.id);
+        }
+    }*/
+
+
+
+    function JS_BackToList(){
+        var sMsg="Are you sure back to list page ?";
+        if(JS_Confirm(sMsg)){
+            location.href='list.html';
+        }
+    }
+
+</script>
+
+</body>
+</html>

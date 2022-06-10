@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>equip list</title>
+
+    <style>
+        table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+
+    <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+
+</head>
+<body>
+
+>> equipments management list
+<div ng-app="myApp" ng-controller="equipCtrl" style="width:100%;">
+
+
+    <div style="width:80%">
+        <span style="margin:0 0 0 80%;text-align:right;">
+            <button type="button"  onclick="Js_Add()" style="float:right;"> [ Add ]</button>
+        </span>
+    </div>
+
+    <table style="width:80%;margin:10px 0 10px 0;">
+        <tr>
+            <th>rowIndex</th>
+            <th>ID</th>
+            <th>Model</th>
+            <th>Brand</th>
+            <th>manufactureDate</th>
+            <th>operation</th>
+        </tr>
+        <tr ng-repeat="x in equips | orderBy : 'brand'">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ x.id }}</td>
+            <td>{{ x.model }}</td>
+            <td>{{ x.brand | uppercase }}</td>
+            <td>{{ x.manufactureDate }}</td>
+            <td><button type="button" value="{{x.id}}" onclick="Js_Detail(this.value)">[ Detail ]</button>
+                <button type="button" value="{{x.id}}" onclick="Js_Edit(this.value)">[ Edit ]</button>
+                <button type="button"  ng-click="Js_Remove(x.id)">[ Delete ]</button>
+            </td>
+        </tr>
+    </table>
+
+    <div style="width:80%">
+        <span style="margin:0 0 0 80%;text-align:right;float:right;">total records：{{ totalRecords }} </span>
+    </div>
+
+
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('equipCtrl', function($scope, $http) {
+        $http.get("http://localhost:8000/equipments")
+            .then(function (result) {
+                //console.log(result.data);
+                $scope.equips = result.data;
+                $scope.totalRecords = $scope.equips!=null ? $scope.equips.length:0;
+            });
+
+        $scope.Js_Remove=function(idObj){
+            //console.log(idObj);
+            var idStr = idObj;
+
+            var msg="Are you sure to detele this item with id ( "+ idStr +" ) ?";
+            if(!JS_Confirm(msg)){
+                return;
+            }
+
+           $http({
+                method:'delete',
+                url:'http://localhost:8000/equipments/'+ idStr,
+                //url:'http://localhost:8000/equipments/0000',
+            }).then(function(resp){
+                if(resp!=null && resp.status==200){
+                    alert('delete success.');
+
+                    $http.get("http://localhost:8000/equipments")
+                        .then(function (result) {
+                            $scope.equips = result.data;
+                            $scope.totalRecords = $scope.equips!=null ? $scope.equips.length:0;
+                        });
+                }
+            },function error(msg){
+                //console.log(msg);
+                if(msg!=null && msg.statusText!=null){
+                    alert('delete failed:' + msg.statusText);
+                }else{
+                    alert('delete failed.');
+                }
+            });
+        }
+
+
+    });
+</script>
+
+
+<script src="../js/customerizeCommon.js"></script>
+
+<script type="text/javascript">
+    function Js_Detail(obj){
+        window.open("detail.html?id=" + obj);
+    }
+
+    function Js_Edit(obj){
+        location.href="edit.html?id=" + obj;
+    }
+
+    function Js_Add(){
+        location.href="edit.html?id=0";
+    };
+
+    /*function Js_Delete(obj){
+        var msg='Are you sure to delete this item with id ( '+ obj +' ) ? ';
+        if(JS_Confirm(msg)){
+            console.log('going to delete ' + obj);
+        }
+    }*/
+
+</script>
+
+</body>
+</html>

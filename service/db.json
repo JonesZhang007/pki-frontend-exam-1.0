@@ -1,0 +1,74 @@
+{
+  "equipments": [
+    {
+      "id": "asset:003",
+      "model": "LAMBDA XLS+ with Printer",
+      "brand": "LAMBDA",
+      "weight": "2.0 kg",
+      "manufactureDate": "2022-06-15"
+    },
+    {
+      "id": "asset:004",
+      "model": "Wizard 2-Detector Gamma Counter, 550 samples",
+      "brand": "Wizard",
+      "weight": "55.0 kg",
+      "manufactureDate": "2015-03-10"
+    },
+    {
+      "id": "asset:005",
+      "model": "Quantum GX2 microCT Imaging System",
+      "brand": "Quantum",
+      "weight": "50 kg",
+      "manufactureDate": "2012-12-12"
+    },
+    {
+      "id": "asset:009",
+      "model": "TGA 4000 System, 100-240V/50-60Hz",
+      "brand": "Thermal",
+      "weight": "15 kg",
+      "manufactureDate": "2011-10-24"
+    },
+    {
+      "id": "asset:010",
+      "model": "Operetta CLS High-Content Analysis System",
+      "brand": "Operetta CLS",
+      "weight": "3 kg",
+      "manufactureDate": "2014-04-11"
+    },
+    {
+      "model": "LAMBDA 650 UV/Vis Spectrophotometer2",
+      "brand": "LAMBDA2",
+      "weight": "76.2 kg",
+      "manufactureDate": "2010-05-12",
+      "id": "asset:222"
+    },
+    {
+      "model": "LAMBDA 650 UV/Vis Spectrophotometer3",
+      "brand": "LAMBDA3",
+      "weight": "76.3 kg",
+      "manufactureDate": "2010-05-13",
+      "id": "XeIiE-f"
+    },
+    {
+      "id": "DKWb-Cg",
+      "model": "8",
+      "brand": "9",
+      "weight": "10",
+      "manufactureDate": "2022-06-09"
+    },
+    {
+      "id": "nU8UhL4",
+      "model": "6",
+      "brand": "4",
+      "weight": "3",
+      "manufactureDate": "2022-06-06"
+    },
+    {
+      "id": "8gxvFKm",
+      "model": "e4",
+      "brand": "55",
+      "weight": "77",
+      "manufactureDate": "2022-06-08"
+    }
+  ]
+}

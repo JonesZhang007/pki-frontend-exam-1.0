@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+
+
+
+    <style>
+        table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+
+
+    <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+
+
+</head>
+<body>
+
+>> equipment detail
+<div  ng-app="myApp" ng-controller="equipCtrl" style="width:100%" >
+    <table style="width:80%">
+        <tr>
+            <td style="width:15%;">id:</td>
+            <td>{{ dataModel.id }}</td>
+        </tr>
+        <tr>
+            <td>model:</td>
+            <td>{{ dataModel.model }}</td>
+        </tr>
+        <tr>
+            <td>brand:</td>
+            <td>{{ dataModel.brand }}</td>
+        </tr>
+        <tr>
+            <td>weight:</td>
+            <td>{{ dataModel.weight }}</td>
+        </tr>
+        <tr>
+            <td>manufactureDate:</td>
+            <td>{{ dataModel.manufactureDate }}</td>
+        </tr>
+    </table>
+</div>
+
+
+<br/>
+<div style="width:80%;text-align:center;"><a onclick="JS_Close();" href="#">[ Close ]</a></div>
+
+
+
+<script>
+    var app = angular.module('myApp', []);
+    var id="";
+
+    app.config(['$locationProvider', function($locationProvider) {
+        // $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    }]);
+
+    app.controller('equipCtrl', function($location,$scope, $http) {
+        console.log($location.search().id);
+        $scope.id=$location.search().id;
+        $http.get("http://localhost:8000/equipments/" +  $scope.id)
+            .then(function (result) {
+                $scope.dataModel = result.data;
+            });
+    });
+</script>
+
+
+<script src="../js/customerizeCommon.js"></script>
+
+<script type="text/javascript">
+    function JS_Close(){
+        var sMsgToClose="Are you sure to close the window ?";
+        if(JS_Confirm(sMsgToClose)){
+            window.close();
+        }
+    }
+</script>
+
+</body>
+</html>
