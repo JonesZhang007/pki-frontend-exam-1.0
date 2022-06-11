@@ -5,7 +5,7 @@
       "model": "LAMBDA XLS+ with Printer",
       "brand": "LAMBDA",
       "weight": "2.0 kg",
-      "manufactureDate": "2022-06-15"
+      "manufactureDate": "2022-05-30"
     },
     {
       "id": "asset:004",
@@ -94,7 +94,9 @@
     {
       "id": "MnXgl8r",
       "model": "44",
-      "manufactureDate": "2022-06-10"
+      "brand": "94398",
+      "weight": "5092233",
+      "manufactureDate": "2022-06-06"
     }
   ]
 }

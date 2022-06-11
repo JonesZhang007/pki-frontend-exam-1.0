@@ -37,23 +37,42 @@
         </div>
 
         <div>
-        <form name="form1">
-        <table style="width:80%;margin:10px 0 10px 5px;" class="table table-bordered">
+        <form name="form1" class="form-horizontal">
+        <table style="width:80%;margin:10px 0 10px 5px;" class="table table-bordered" id="tb1">
             <tr>
                 <td style="width:15%;">model: <span style='color:red;text-align: right;float:right;'>*</span></td>
-                <td> <input type="text" ng-model="dataModel.model" /> </td>
+                <td> <div class="col-sm-10">
+                        <input type="text" class="form-control" id="firstname" ng-model="dataModel.model"
+                               placeholder="pls input model">
+                    </div>
+                </td>
+
+
             </tr>
             <tr>
                 <td>brand:</td>
-                <td><input type="text" ng-model="dataModel.brand"  /> </td>
+                <td>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="brand"  ng-model="dataModel.brand"
+                               placeholder="pls input brand">
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>weight:</td>
-                <td><input type="text" ng-model="dataModel.weight"/> </td>
+                <td> <div class="col-sm-10">
+                        <input type="text" class="form-control" id="weight"  ng-model="dataModel.weight"
+                               placeholder="pls input weight">
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>manufactureDate:<span style="color:red;text-align: right;float:right;">*</span></td>
-                <td><input type="date" ng-model="dataModel.manufactureDate" aria-required="true" />
+                <td>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="manufactureDate"  ng-model="dataModel.manufactureDate"
+                                 aria-required="true" >
+                    </div>
                 </td>
 
             </tr>
@@ -77,7 +96,6 @@
 
 
     </div>
-
 
 <script>
     var app = angular.module('myApp', []);
@@ -144,7 +162,9 @@
                     data:uiData
                 }).then(function(resp){
                     if(resp!=null && resp.status==200){
-                        alert('save success.');
+                        // alert('save success.');
+                        //console.log('save success.');
+                        alert('save success');
                         var msg='Are you want to go to list page ?';
                         if(JS_Confirm(msg)){
                             location.href='list.html';
@@ -214,8 +234,12 @@
 
 </script>
 
+
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
 
 </body>
 </html>

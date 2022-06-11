@@ -27,17 +27,31 @@
 
         .pageList-item0 {
             border: 1px solid #DDDDDD;
-            padding: 5px;
-            margin: 5px;
+            padding: 1px;
+            margin: 1px;
+            line-height:28px;
         }
 
         .pageList-item {
             border: 1px solid #DDDDDD;
-            padding: 5px;
-            margin: 5px;
+            padding: 1px;
+            margin: 1px;
+            line-height:28px;
         }
 
         .pageList-item:hover{
+            background:yellow;
+            color:red;
+            cursor:pointer;
+        }
+
+        .pageList-item >  a :hover{
+            background:yellow;
+            color:red;
+            cursor:pointer;
+        }
+
+        .pageList-item >  button :hover{
             background:yellow;
             color:red;
             cursor:pointer;
@@ -67,10 +81,14 @@
 <div ng-app="myApp" ng-controller="equipCtrl" style="width:100%;">
 
 
-    <div style="width:80%;margin:10px 0 10px 5px;">
+    <div style="width:80%;margin:10px 0 20px 5px;">
         <span style="margin:0 0 0 80%;text-align:right;">
-            <button type="button"  onclick="Js_Add()" style="float:right;"> [ Add ]</button>
+            <button type="button" class="btn btn-default"  onclick="Js_Add()" style="float:right;color:cornflowerblue">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
         </span>
+
+
     </div>
 
     <table style="width:80%;margin:10px 0 10px 5px;" class="table table-bordered">
@@ -88,9 +106,16 @@
             <td>{{ x.model }}</td>
             <td>{{ x.brand | uppercase }}</td>
             <td>{{ x.manufactureDate }}</td>
-            <td style="text-align:center;"><button type="button" value="{{x.id}}" onclick="Js_Detail(this.value)">[ Detail ]</button>
-                <button type="button" value="{{x.id}}" onclick="Js_Edit(this.value)">[ Edit ]</button>
-                <button type="button"  ng-click="Js_Remove(x.id)">[ Delete ]</button>
+            <td style="text-align:center;">
+                <button type="button" class="btn btn-default" style="color:mediumpurple" value="{{x.id}}" onclick="Js_Detail(this.value)">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </button>
+                <button type="button" class="btn btn-default"  style="color:cornflowerblue" value="{{x.id}}" onclick="Js_Edit(this.value)">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button"  class="btn btn-default"  style="color:red"  ng-click="Js_Remove(x.id)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </td>
         </tr>
     </table>
@@ -102,15 +127,31 @@
     </div>
 
 
-    <div style="width:80%;text-align:right;">
+    <div style="width:80%;margin:10px 0 20px 5px;text-align:right;">
         <footer class="footer" style="margin:0 0 0 80%;">
             <ul class="pageList">
-                <li class="pageList-item" ng-click="firstPage()">[first]</li>
-                <li class="pageList-item" ng-click="previousPage()">[prev]</li>
-                <li class="pageList-item" ng-repeat="pages in pageList" ng-class="{'active': isActive(pages)}">
-                    <a href="" ng-click="selectPage(pages)">{{pages}}</a></li>
-                <li class="pageList-item" ng-click="nextPage()">[next]</li>
-                <li class="pageList-item" ng-click="lastPage()">[end]</li>
+                <li class="pageList-item" ng-click="firstPage()">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-step-backward"></span>
+                    </button>
+                </li>
+                <li class="pageList-item" ng-click="previousPage()">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </button>
+                </li>
+                <li class="pageList-item" ng-repeat="pages in pageList" ng-class="{'active': isActive(pages)}"  >
+                    <a href="" ng-click="selectPage(pages)" style="vertical-align:middle;display: inline-block;">{{pages}}</a></li>
+                <li class="pageList-item" ng-click="nextPage()">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    </button>
+                </li>
+                <li class="pageList-item" ng-click="lastPage()">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-step-forward"></span>
+                    </button>
+                </li>
                 <li class="pageList-item0">total:{{pageNumbers}}</li>
             </ul>
         </footer>
