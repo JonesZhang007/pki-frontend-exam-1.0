@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>equip list</title>
 
     <style>
@@ -55,6 +56,8 @@
 
     </style>
 
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
 
 </head>
@@ -64,13 +67,13 @@
 <div ng-app="myApp" ng-controller="equipCtrl" style="width:100%;">
 
 
-    <div style="width:80%">
+    <div style="width:80%;margin:10px 0 10px 5px;">
         <span style="margin:0 0 0 80%;text-align:right;">
             <button type="button"  onclick="Js_Add()" style="float:right;"> [ Add ]</button>
         </span>
     </div>
 
-    <table style="width:80%;margin:10px 0 10px 0;">
+    <table style="width:80%;margin:10px 0 10px 5px;" class="table table-bordered">
         <tr>
             <th>rowIndex</th>
             <th>ID</th>
@@ -255,6 +258,10 @@
     }*/
 
 </script>
+
+
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>edit</title>
 
 
@@ -20,6 +21,7 @@
         }
     </style>
 
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
     <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
 
@@ -36,7 +38,7 @@
 
         <div>
         <form name="form1">
-        <table style="width:80%">
+        <table style="width:80%;margin:10px 0 10px 5px;" class="table table-bordered">
             <tr>
                 <td style="width:15%;">model: <span style='color:red;text-align: right;float:right;'>*</span></td>
                 <td> <input type="text" ng-model="dataModel.model" /> </td>
@@ -211,6 +213,9 @@
     }
 
 </script>
+
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>
