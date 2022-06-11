@@ -79,6 +79,11 @@
         $http.get("http://localhost:8000/equipments/" +  $scope.id)
             .then(function (result) {
                 $scope.dataModel = result.data;
+            },function error(msg){
+                if(msg!=null){
+                    console.log(msg);
+                }
+                alert('read data failed. pls go to administrator for help');
             });
     });
 </script>

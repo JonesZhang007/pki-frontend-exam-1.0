@@ -88,7 +88,7 @@
 
         <br/>
 
-        <div style="width:80%;text-align:center;"><!--<a onclick="JS_Save();" href="#" type="submit">[ Save ]</a>-->
+        <div style="width:80%;text-align:center;">
              <a href="#" ng-click="JS_Save()">[ Save ]</a>
             &nbsp;&nbsp;&nbsp;
             <a onclick="JS_BackToList();" href="#">[ Back To List ]</a>
@@ -100,8 +100,6 @@
 <script>
     var app = angular.module('myApp', []);
     var id="";
-
-
 
     app.config(['$locationProvider', function($locationProvider) {
         // $locationProvider.html5Mode(true);
@@ -121,6 +119,11 @@
                     var dateAsString = $filter('date')($scope.dataModel.manufactureDate, "yyyy-MM-dd");
                     //console.log(dateAsString);
                     $scope.dataModel.manufactureDate = new Date(dateAsString);
+                },function error(msg){
+                    if(msg!=null){
+                        console.log(msg);
+                    }
+                    alert('read data failed. pls go to administrator for help');
                 });
 
             $scope.formTitle = "edit";
@@ -158,7 +161,6 @@
                 $http({
                     method:'put',
                     url:'http://localhost:8000/equipments/'+ $scope.id,
-                    //url:'http://localhost:8000/equipments/0000',
                     data:uiData
                 }).then(function(resp){
                     if(resp!=null && resp.status==200){
@@ -171,12 +173,10 @@
                         }
                     }
                 },function error(msg){
-                    //console.log(msg);
-                    if(msg!=null && msg.statusText!=null){
-                        alert('save failed:' + msg.statusText);
-                    }else{
-                        alert('save changes failed.');
+                    if(msg!=null){
+                        console.log(msg);
                     }
+                    alert('save data failed. pls go to administrator for help');
                 });
             }else {
                 // add
@@ -185,7 +185,6 @@
                 $http({
                     method:'post',
                     url:'http://localhost:8000/equipments/',
-                    //url:'http://localhost:8000/equipments/0000',
                     data:uiData
                 }).then(function(resp){
                     if(resp!=null && (resp.status==200 || resp.status==201)){
@@ -196,12 +195,10 @@
                         }
                     }
                 },function error(msg){
-                    //console.log(msg);
-                    if(msg!=null && msg.statusText!=null){
-                        alert('save failed:' + msg.statusText);
-                    }else{
-                        alert('save changes failed.');
+                    if(msg!=null){
+                        console.log(msg);
                     }
+                    alert('save data failed. pls go to administrator for help');
                 });
             }
 
@@ -214,16 +211,6 @@
 <script src="../js/customerizeCommon.js"></script>
 
 <script type="text/javascript">
-   /* function JS_Save(){
-        var sMsg="Are you sure to save your changes ?";
-        if(JS_Confirm(sMsg)){
-            //toSave()
-            console.log('toSave');
-            console.log($$scope.id);
-        }
-    }*/
-
-
 
     function JS_BackToList(){
         var sMsg="Are you sure back to list page ?";

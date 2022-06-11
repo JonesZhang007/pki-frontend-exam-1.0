@@ -233,7 +233,9 @@
 
 
             }, function errorCallBack(response) {
-                alert(response);
+                //alert(response);
+                alert('load data failed. Pls go to administrator for help.')
+                console.log(response);
             });
 
 
@@ -250,7 +252,6 @@
            $http({
                 method:'delete',
                 url:'http://localhost:8000/equipments/'+ idStr,
-                //url:'http://localhost:8000/equipments/0000',
             }).then(function(resp){
                 if(resp!=null && resp.status==200){
                     alert('delete success.');
@@ -259,16 +260,19 @@
                         .then(function (result) {
                             $scope.equips = result.data;
                             $scope.totalRecords = $scope.equips!=null ? $scope.equips.length:0;
+                        },function error(msg){
+                            if(msg!=null){
+                                console.log(msg);
+                            }
+                            alert('read data failed. pls go to administrator for help');
                         });
                 }
             },function error(msg){
-                //console.log(msg);
-                if(msg!=null && msg.statusText!=null){
-                    alert('delete failed:' + msg.statusText);
-                }else{
-                    alert('delete failed.');
-                }
-            });
+               if(msg!=null){
+                   console.log(msg);
+               }
+               alert('delete data failed. pls go to administrator for help');
+           });
         }
 
 
@@ -290,13 +294,6 @@
     function Js_Add(){
         location.href="edit.html?id=0";
     };
-
-    /*function Js_Delete(obj){
-        var msg='Are you sure to delete this item with id ( '+ obj +' ) ? ';
-        if(JS_Confirm(msg)){
-            console.log('going to delete ' + obj);
-        }
-    }*/
 
 </script>
 
